@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet var viewConroller: UIView!
     var timer: Timer?
     var isTimerStarted: Bool = false
-    var counter = 0
+    var counter = 5
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +21,12 @@ class ViewController: UIViewController {
         
     }
     @objc func timerTickHandler() {
-        if isTimerStarted == true, counter < 5 {
-            counter += 1
+        if isTimerStarted == true, counter > 0 {
+            counter -= 1
             updateCounterLabel()
         } else {
             viewBackgroundStatic()
-            counter = 0
+            counter = 5
             updateCounterLabel()
             stopTimer()
         }
@@ -49,14 +49,17 @@ class ViewController: UIViewController {
         viewConroller.backgroundColor = UIColor.green
         updateCounterLabel()
     }
+    
     func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerTickHandler), userInfo: nil, repeats: true)
         updateCounterLabel()
         isTimerStarted = true
     }
+    
     func updateCounterLabel() {
         timerLabel.text = "\(counter)"
     }
+    
     func viewBackgroundStatic() {
         viewConroller.backgroundColor = UIColor.lightGray
     }
@@ -64,7 +67,7 @@ class ViewController: UIViewController {
     func stopTimer() {
         timer?.invalidate()
         timer = nil
-        counter = 0
+        counter = 5
         isTimerStarted = false
     }
 }
